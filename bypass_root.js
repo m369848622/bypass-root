@@ -233,7 +233,7 @@ Original author: Daniele Linguaglossa
             onEnter: function (args) {
                 var path = Memory.readCString(args[0]);
                 if (path.indexOf('proc')>-1){
-                    path = path.replace(/\/\d*\//,"/1/");
+                    path = path.replace(/\/(\d*|self)\//,"/1/");
                     Memory.writeUtf8String(args[0], path);
                     send("Bypass native fopen->proc->"+path+"->"+ path);
                 }
