@@ -1,14 +1,88 @@
 
-var RootBinaries = ["su", "busybox", "supersu", "Superuser.apk", "KingoUser.apk", "SuperSu.apk", "magisk","riru"];
-
+var RootBinaries = ["su", "busybox", "supersu", "Superuser.apk", "KingoUser.apk", "SuperSu.apk", "magisk", "riru"];
+var isdebugger = false;
 
 function bypass_all() {
     bypass_root();
     bypass_hook();
+    bypass_sslpinning();
+    setTimeout(run, 1000);
 }
 
+function run() {//hook js
+    console.log('start hook');
+//response
+    var SmNetworkUtil = Java.use("com.wsgw.intercept_sm.SmNetworkUtil");
+    SmNetworkUtil.sm4De.implementation = function (str, str2) {
+        var res = SmNetworkUtil.sm4De.call(this, str, str2);
+        console.log('encryptData====================================================================================================');
+        console.log('str->'+str);
+        console.log('str2->'+str2);
+        console.log( 'sm4De->'+res);
+        console.log('encryptData====================================================================================================');
+        return res;
+    };
+    // SmNetworkUtil.sm2De.implementation = function (str, str2) {
+    //     var res = SmNetworkUtil.sm2De.call(this, str, str2);
+    //     console.log('respKey====================================================================================================');
+    //     console.log('str->'+str);
+    //     console.log('str2->'+str2);
+    //     console.log( 'sm2De->'+res);
+    //     console.log('respKey====================================================================================================');
+    //     return res;
+    // };
+
+
+//header
+    // var TigerTallyAPI = Java.use("com.aliyun.TigerTally.TigerTallyAPI");
+    // TigerTallyAPI._genericNt3.implementation = function (str, str2) {
+    //     var res = TigerTallyAPI._genericNt3.call(this, str, str2);
+    //     console.log('====================================================================================================');
+    //     console.log('str->'+str);
+    //     console.log('str2->'+str2);
+    //     console.log('_genericNt3->'+res);
+    //     console.log('====================================================================================================');
+    //     return res;
+    // };
+
+
+//request
+    // var SmEncryptUtil = Java.use("com.wsgw.intercept_sm.SmNetworkUtil");
+    // SmEncryptUtil.sm2En.implementation = function (str, str2) {
+    //     var res = SmEncryptUtil.sm2En.call(this, str, str2);
+    //     console.log('skey====================================================================================================');
+    //     console.log('str->'+str);
+    //     console.log('str2->'+str2);
+    //     console.log('sm2En->'+res);
+    //     console.log('skey====================================================================================================');
+    //     return res;
+    // };
+    // SmNetworkUtil.sm4En.implementation = function (str, str2) {
+    //     var res = SmNetworkUtil.sm4En.call(this, str, str2);
+    //     console.log('data====================================================================================================');
+    //     console.log('str->'+str);
+    //     console.log('str2->'+str2);
+    //     console.log( 'sm4En->'+res);
+    //     console.log('data====================================================================================================');
+    //     return res;
+    // };
+    // SmNetworkUtil.sm3Sign.implementation = function (str ) {
+    //     var res = SmNetworkUtil.sm3Sign.call(this, str);
+    //     console.log('sign====================================================================================================');
+    //     console.log('str->'+str);
+    //     console.log( 'sm3Sign->'+res);
+    //     console.log('sign====================================================================================================');
+    //     return res;
+    // };
+
+    var Config = Java.use('com.sgcc.wsgw.publiclibrary.Config');
+    Config.isDebug = true;
+
+}
+
+
 function bypass_root() {
-    /*
+    /* 
     https://codeshare.frida.re/@dzonerzy/fridantiroot/
 Original author: Daniele Linguaglossa
 28/07/2021 -    Edited by Simone Quatrini
@@ -55,42 +129,42 @@ Original author: Daniele Linguaglossa
 
         var loaded_classes = Java.enumerateLoadedClassesSync();
 
-        send("Loaded " + loaded_classes.length + " classes!");
+        sendlog("Loaded " + loaded_classes.length + " classes!");
 
         var useKeyInfo = false;
 
         var useProcessManager = false;
 
-        send("loaded: " + loaded_classes.indexOf('java.lang.ProcessManager'));
+        sendlog("loaded: " + loaded_classes.indexOf('java.lang.ProcessManager'));
 
         if (loaded_classes.indexOf('java.lang.ProcessManager') != -1) {
             try {
                 //useProcessManager = true;
                 //var ProcessManager = Java.use('java.lang.ProcessManager');
             } catch (err) {
-                send("ProcessManager Hook failed: " + err);
+                sendlog("ProcessManager Hook failed: " + err);
             }
         } else {
-            send("ProcessManager hook not loaded");
+            sendlog("ProcessManager hook not loaded");
         }
 
         var KeyInfo = null;
 
         if (loaded_classes.indexOf('android.security.keystore.KeyInfo') != -1) {
             try {
-                //useKeyInfo = true;
-                //var KeyInfo = Java.use('android.security.keystore.KeyInfo');
+                useKeyInfo = true;
+                var KeyInfo = Java.use('android.security.keystore.KeyInfo');
             } catch (err) {
-                send("KeyInfo Hook failed: " + err);
+                sendlog("KeyInfo Hook failed: " + err);
             }
         } else {
-            send("KeyInfo hook not loaded");
+            sendlog("KeyInfo hook not loaded");
         }
 
         PackageManager.getPackageInfo.overload('java.lang.String', 'int').implementation = function (pname, flags) {
             var shouldFakePackage = (RootPackages.indexOf(pname) > -1);
             if (shouldFakePackage) {
-                send("Bypass root check for package: " + pname);
+                sendlog("Bypass root check for package: " + pname);
                 pname = "set.package.name.to.a.fake.one.so.we.can.bypass.it";
             }
             return this.getPackageInfo.overload('java.lang.String', 'int').call(this, pname, flags);
@@ -100,7 +174,7 @@ Original author: Daniele Linguaglossa
             var name = NativeFile.getName.call(this);
             var shouldFakeReturn = (RootBinaries.indexOf(name) > -1);
             if (shouldFakeReturn) {
-                send("Bypass return value for binary: " + name);
+                sendlog("Bypass return value for binary: " + name);
                 return false;
             } else {
                 return this.exists.call(this);
@@ -117,12 +191,12 @@ Original author: Daniele Linguaglossa
         exec5.implementation = function (cmd, env, dir) {
             if (cmd.indexOf("getprop") != -1 || cmd == "mount" || cmd.indexOf("build.prop") != -1 || cmd == "id" || cmd == "sh") {
                 var fakeCmd = "grep";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             if (cmd == "su") {
                 var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             return exec5.call(this, cmd, env, dir);
@@ -133,13 +207,13 @@ Original author: Daniele Linguaglossa
                 var tmp_cmd = cmdarr[i];
                 if (tmp_cmd.indexOf("getprop") != -1 || tmp_cmd == "mount" || tmp_cmd.indexOf("build.prop") != -1 || tmp_cmd == "id" || tmp_cmd == "sh") {
                     var fakeCmd = "grep";
-                    send("Bypass " + cmdarr + " command");
+                    sendlog("Bypass " + cmdarr + " command");
                     return exec1.call(this, fakeCmd);
                 }
 
                 if (tmp_cmd == "su") {
                     var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                    send("Bypass " + cmdarr + " command");
+                    sendlog("Bypass " + cmdarr + " command");
                     return exec1.call(this, fakeCmd);
                 }
             }
@@ -151,13 +225,13 @@ Original author: Daniele Linguaglossa
                 var tmp_cmd = cmdarr[i];
                 if (tmp_cmd.indexOf("getprop") != -1 || tmp_cmd == "mount" || tmp_cmd.indexOf("build.prop") != -1 || tmp_cmd == "id" || tmp_cmd == "sh") {
                     var fakeCmd = "grep";
-                    send("Bypass " + cmdarr + " command");
+                    sendlog("Bypass " + cmdarr + " command");
                     return exec1.call(this, fakeCmd);
                 }
 
                 if (tmp_cmd == "su") {
                     var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                    send("Bypass " + cmdarr + " command");
+                    sendlog("Bypass " + cmdarr + " command");
                     return exec1.call(this, fakeCmd);
                 }
             }
@@ -167,12 +241,12 @@ Original author: Daniele Linguaglossa
         exec2.implementation = function (cmd, env) {
             if (cmd.indexOf("getprop") != -1 || cmd == "mount" || cmd.indexOf("build.prop") != -1 || cmd == "id" || cmd == "sh") {
                 var fakeCmd = "grep";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             if (cmd == "su") {
                 var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             return exec2.call(this, cmd, env);
@@ -183,13 +257,13 @@ Original author: Daniele Linguaglossa
                 var tmp_cmd = cmd[i];
                 if (tmp_cmd.indexOf("getprop") != -1 || tmp_cmd == "mount" || tmp_cmd.indexOf("build.prop") != -1 || tmp_cmd == "id" || tmp_cmd == "sh") {
                     var fakeCmd = "grep";
-                    send("Bypass " + cmd + " command");
+                    sendlog("Bypass " + cmd + " command");
                     return exec1.call(this, fakeCmd);
                 }
 
                 if (tmp_cmd == "su") {
                     var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                    send("Bypass " + cmd + " command");
+                    sendlog("Bypass " + cmd + " command");
                     return exec1.call(this, fakeCmd);
                 }
             }
@@ -200,12 +274,12 @@ Original author: Daniele Linguaglossa
         exec1.implementation = function (cmd) {
             if (cmd.indexOf("getprop") != -1 || cmd == "mount" || cmd.indexOf("build.prop") != -1 || cmd == "id" || cmd == "sh") {
                 var fakeCmd = "grep";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             if (cmd == "su") {
                 var fakeCmd = "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled";
-                send("Bypass " + cmd + " command");
+                sendlog("Bypass " + cmd + " command");
                 return exec1.call(this, fakeCmd);
             }
             return exec1.call(this, cmd);
@@ -213,7 +287,7 @@ Original author: Daniele Linguaglossa
 
         String.contains.implementation = function (name) {
             if (name == "test-keys") {
-                send("Bypass test-keys check");
+                sendlog("Bypass test-keys check");
                 return false;
             }
             return this.contains.call(this, name);
@@ -223,7 +297,7 @@ Original author: Daniele Linguaglossa
 
         get.implementation = function (name) {
             if (RootPropertiesKeys.indexOf(name) != -1) {
-                send("Bypass " + name);
+                sendlog("Bypass " + name);
                 return RootProperties[name];
             }
             return this.get.call(this, name);
@@ -232,17 +306,17 @@ Original author: Daniele Linguaglossa
         Interceptor.attach(Module.findExportByName("libc.so", "fopen"), {
             onEnter: function (args) {
                 var path = Memory.readCString(args[0]);
-                if (path.indexOf('proc')>-1){
-                    path = path.replace(/\/(\d*|self)\//,"/1/");
+                if (path.indexOf('proc/') > -1) {
+                    sendlog("Bypass native fopen->proc->" + path + "->" + path.replaceAll(/\/(\d*|self)\//g, "/1/"));
+                    path = path.replaceAll(/\/(\d*|self)\//g, "/1/");
                     Memory.writeUtf8String(args[0], path);
-                    send("Bypass native fopen->proc->"+path+"->"+ path);
                 }
                 path = path.split("/");
                 var executable = path[path.length - 1];
                 var shouldFakeReturn = (RootBinaries.indexOf(executable) > -1)
                 if (shouldFakeReturn) {
                     Memory.writeUtf8String(args[0], "/notexists");
-                    send("Bypass native fopen");
+                    sendlog("Bypass native fopen");
                 }
             },
             onLeave: function (retval) {
@@ -252,13 +326,13 @@ Original author: Daniele Linguaglossa
         Interceptor.attach(Module.findExportByName("libc.so", "system"), {
             onEnter: function (args) {
                 var cmd = Memory.readCString(args[0]);
-                send("SYSTEM CMD: " + cmd);
+                sendlog("SYSTEM CMD: " + cmd);
                 if (cmd.indexOf("getprop") != -1 || cmd == "mount" || cmd.indexOf("build.prop") != -1 || cmd == "id") {
-                    send("Bypass native system: " + cmd);
+                    sendlog("Bypass native system: " + cmd);
                     Memory.writeUtf8String(args[0], "grep");
                 }
                 if (cmd == "su") {
-                    send("Bypass native system: " + cmd);
+                    sendlog("Bypass native system: " + cmd);
                     Memory.writeUtf8String(args[0], "justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled");
                 }
             },
@@ -292,7 +366,7 @@ Original author: Daniele Linguaglossa
             } else {
                 var shouldFakeRead = (text.indexOf("ro.build.tags=test-keys") > -1);
                 if (shouldFakeRead) {
-                    send("Bypass build.prop file read");
+                    sendlog("Bypass build.prop file read");
                     text = text.replace("ro.build.tags=test-keys", "ro.build.tags=release-keys");
                 }
             }
@@ -311,12 +385,12 @@ Original author: Daniele Linguaglossa
                 }
             }
             if (shouldModifyCommand) {
-                send("Bypass ProcessBuilder " + cmd);
+                sendlog("Bypass ProcessBuilder " + cmd);
                 this.command.call(this, ["grep"]);
                 return this.start.call(this);
             }
             if (cmd.indexOf("su") != -1) {
-                send("Bypass ProcessBuilder " + cmd);
+                sendlog("Bypass ProcessBuilder " + cmd);
                 this.command.call(this, ["justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled"]);
                 return this.start.call(this);
             }
@@ -334,12 +408,12 @@ Original author: Daniele Linguaglossa
                     var tmp_cmd = cmd[i];
                     if (tmp_cmd.indexOf("getprop") != -1 || tmp_cmd == "mount" || tmp_cmd.indexOf("build.prop") != -1 || tmp_cmd == "id") {
                         var fake_cmd = ["grep"];
-                        send("Bypass " + cmdarr + " command");
+                        sendlog("Bypass " + cmdarr + " command");
                     }
 
                     if (tmp_cmd == "su") {
                         var fake_cmd = ["justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled"];
-                        send("Bypass " + cmdarr + " command");
+                        sendlog("Bypass " + cmdarr + " command");
                     }
                 }
                 return ProcManExec.call(this, fake_cmd, env, workdir, redirectstderr);
@@ -351,12 +425,12 @@ Original author: Daniele Linguaglossa
                     var tmp_cmd = cmd[i];
                     if (tmp_cmd.indexOf("getprop") != -1 || tmp_cmd == "mount" || tmp_cmd.indexOf("build.prop") != -1 || tmp_cmd == "id") {
                         var fake_cmd = ["grep"];
-                        send("Bypass " + cmdarr + " command");
+                        sendlog("Bypass " + cmdarr + " command");
                     }
 
                     if (tmp_cmd == "su") {
                         var fake_cmd = ["justafakecommandthatcannotexistsusingthisshouldthowanexceptionwheneversuiscalled"];
-                        send("Bypass " + cmdarr + " command");
+                        sendlog("Bypass " + cmdarr + " command");
                     }
                 }
                 return ProcManExecVariant.call(this, fake_cmd, env, directory, stdin, stdout, stderr, redirect);
@@ -365,7 +439,7 @@ Original author: Daniele Linguaglossa
 
         if (useKeyInfo) {
             KeyInfo.isInsideSecureHardware.implementation = function () {
-                send("Bypass isInsideSecureHardware");
+                sendlog("Bypass isInsideSecureHardware");
                 return true;
             }
         }
@@ -373,29 +447,88 @@ Original author: Daniele Linguaglossa
     });
 }
 
-
-
 function bypass_hook() {
     var fgetsPtr = Module.findExportByName("libc.so", "fgets");
     var fgets = new NativeFunction(fgetsPtr, 'pointer', ['pointer', 'int', 'pointer']);
     Interceptor.replace(fgetsPtr, new NativeCallback(function (buffer, size, fp) {
         var retval = fgets(buffer, size, fp);
         var bufstr = Memory.readUtf8String(buffer);
-        for (let index = 0; index < RootBinaries.length; index++) {
-            const element = RootBinaries[index];
-            if (bufstr.indexOf(element) > -1) {
-                send('Bypass bufstr->' + bufstr);//如果这句数据了 很有可能检测到了其他地方 还得改改代码
-                Memory.writeUtf8String(buffer, "");
-            }
-        }
+        // for (let index = 0; index < RootBinaries.length; index++) {
+        //     const element = RootBinaries[index];
+        //     if (bufstr.indexOf(element) > -1) {
+        //         sendlog('Bypass bufstr->' + bufstr);//如果这句数据了 很有可能检测到了其他地方 还得改改代码
+        //         Memory.writeUtf8String(buffer, "");
+        //     }
+        // }
         if (bufstr.indexOf("TracerPid:") > -1) {
-            send('Bypass TracerPid->' + bufstr);
+            sendlog('Bypass TracerPid->' + bufstr);
             Memory.writeUtf8String(buffer, "TracerPid:\t0");
         }
         return retval;
     }, 'pointer', ['pointer', 'int', 'pointer']))
 }
 
+//from https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/
+function bypass_sslpinning() {
+    Java.perform(function () {
+        console.log("");
+        console.log("[.] Cert Pinning Bypass/Re-Pinning");
 
+        var CertificateFactory = Java.use("java.security.cert.CertificateFactory");
+        var FileInputStream = Java.use("java.io.FileInputStream");
+        var BufferedInputStream = Java.use("java.io.BufferedInputStream");
+        var X509Certificate = Java.use("java.security.cert.X509Certificate");
+        var KeyStore = Java.use("java.security.KeyStore");
+        var TrustManagerFactory = Java.use("javax.net.ssl.TrustManagerFactory");
+        var SSLContext = Java.use("javax.net.ssl.SSLContext");
+
+        // Load CAs from an InputStream
+        console.log("[+] Loading our CA...")
+        var cf = CertificateFactory.getInstance("X.509");
+
+        try {
+            var fileInputStream = FileInputStream.$new("/data/local/tmp/cert-der.crt");//add your crt!!!!!!!!!!!!
+        }
+        catch (err) {
+            console.log("[o] " + err);
+        }
+
+        var bufferedInputStream = BufferedInputStream.$new(fileInputStream);
+        var ca = cf.generateCertificate(bufferedInputStream);
+        bufferedInputStream.close();
+
+        var certInfo = Java.cast(ca, X509Certificate);
+        console.log("[o] Our CA Info: " + certInfo.getSubjectDN());
+
+        // Create a KeyStore containing our trusted CAs
+        console.log("[+] Creating a KeyStore for our CA...");
+        var keyStoreType = KeyStore.getDefaultType();
+        var keyStore = KeyStore.getInstance(keyStoreType);
+        keyStore.load(null, null);
+        keyStore.setCertificateEntry("ca", ca);
+
+        // Create a TrustManager that trusts the CAs in our KeyStore
+        console.log("[+] Creating a TrustManager that trusts the CA in our KeyStore...");
+        var tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        var tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+        tmf.init(keyStore);
+        console.log("[+] Our TrustManager is ready...");
+
+        console.log("[+] Hijacking SSLContext methods now...")
+        console.log("[-] Waiting for the app to invoke SSLContext.init()...")
+
+        SSLContext.init.overload("[Ljavax.net.ssl.KeyManager;", "[Ljavax.net.ssl.TrustManager;", "java.security.SecureRandom").implementation = function (a, b, c) {
+            console.log("[o] App invoked javax.net.ssl.SSLContext.init...");
+            SSLContext.init.overload("[Ljavax.net.ssl.KeyManager;", "[Ljavax.net.ssl.TrustManager;", "java.security.SecureRandom").call(this, a, tmf.getTrustManagers(), c);
+            console.log("[+] SSLContext initialized with our custom TrustManager!");
+        }
+    });
+}
+
+function sendlog(str) {
+    if (isdebugger) {
+        sendlog(str);
+    }
+}
 
 setImmediate(bypass_all, 0);
