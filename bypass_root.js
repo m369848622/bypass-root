@@ -1,15 +1,17 @@
 
-var RootBinaries = ["su", "busybox", "supersu", "Superuser.apk", "KingoUser.apk", "SuperSu.apk", "magisk", "riru", "tmp"];
+var RootBinaries = ["su", "busybox", "supersu", "Superuser.apk", "KingoUser.apk", "SuperSu.apk", "magisk", "riru"];
 var isDebugger = true;
 var isStronger = false;
+var isStrongerPlus = false;
 
 function bypass_all() {
     bypass_root();
-    bypass_hook();
-    bypass_kill();
+    bypass_open();
+    // bypass_fgets();
+    // bypass_kill();
     // bypass_fork();
     bypass_sslpinning();
-    setTimeout(run, 1000);
+    setTimeout(run,1000);
 }
 
 function find_all() {
@@ -30,58 +32,58 @@ function run() {//hook js
         console.log('encryptData====================================================================================================');
         return res;
     };
-    // SmNetworkUtil.sm2De.implementation = function (str, str2) {
-    //     var res = SmNetworkUtil.sm2De.call(this, str, str2);
-    //     console.log('respKey====================================================================================================');
-    //     console.log('str->'+str);
-    //     console.log('str2->'+str2);
-    //     console.log( 'sm2De->'+res);
-    //     console.log('respKey====================================================================================================');
-    //     return res;
-    // };
+    SmNetworkUtil.sm2De.implementation = function (str, str2) {
+        var res = SmNetworkUtil.sm2De.call(this, str, str2);
+        console.log('respKey====================================================================================================');
+        console.log('str->'+str);
+        console.log('str2->'+str2);
+        console.log( 'sm2De->'+res);
+        console.log('respKey====================================================================================================');
+        return res;
+    };
 
 
-    //header
-    // var TigerTallyAPI = Java.use("com.aliyun.TigerTally.TigerTallyAPI");
-    // TigerTallyAPI._genericNt3.implementation = function (str, str2) {
-    //     var res = TigerTallyAPI._genericNt3.call(this, str, str2);
-    //     console.log('====================================================================================================');
-    //     console.log('str->'+str);
-    //     console.log('str2->'+str2);
-    //     console.log('_genericNt3->'+res);
-    //     console.log('====================================================================================================');
-    //     return res;
-    // };
+    // header
+    var TigerTallyAPI = Java.use("com.aliyun.TigerTally.TigerTallyAPI");
+    TigerTallyAPI._genericNt3.implementation = function (str, str2) {
+        var res = TigerTallyAPI._genericNt3.call(this, str, str2);
+        console.log('====================================================================================================');
+        console.log('str->'+str);
+        console.log('str2->'+str2);
+        console.log('_genericNt3->'+res);
+        console.log('====================================================================================================');
+        return res;
+    };
 
 
-    //request
-    // var SmEncryptUtil = Java.use("com.wsgw.intercept_sm.SmNetworkUtil");
-    // SmEncryptUtil.sm2En.implementation = function (str, str2) {
-    //     var res = SmEncryptUtil.sm2En.call(this, str, str2);
-    //     console.log('skey====================================================================================================');
-    //     console.log('str->'+str);
-    //     console.log('str2->'+str2);
-    //     console.log('sm2En->'+res);
-    //     console.log('skey====================================================================================================');
-    //     return res;
-    // };
-    // SmNetworkUtil.sm4En.implementation = function (str, str2) {
-    //     var res = SmNetworkUtil.sm4En.call(this, str, str2);
-    //     console.log('data====================================================================================================');
-    //     console.log('str->'+str);
-    //     console.log('str2->'+str2);
-    //     console.log( 'sm4En->'+res);
-    //     console.log('data====================================================================================================');
-    //     return res;
-    // };
-    // SmNetworkUtil.sm3Sign.implementation = function (str ) {
-    //     var res = SmNetworkUtil.sm3Sign.call(this, str);
-    //     console.log('sign====================================================================================================');
-    //     console.log('str->'+str);
-    //     console.log( 'sm3Sign->'+res);
-    //     console.log('sign====================================================================================================');
-    //     return res;
-    // };
+    // request
+    var SmEncryptUtil = Java.use("com.wsgw.intercept_sm.SmNetworkUtil");
+    SmEncryptUtil.sm2En.implementation = function (str, str2) {
+        var res = SmEncryptUtil.sm2En.call(this, str, str2);
+        console.log('skey====================================================================================================');
+        console.log('str->'+str);
+        console.log('str2->'+str2);
+        console.log('sm2En->'+res);
+        console.log('skey====================================================================================================');
+        return res;
+    };
+    SmNetworkUtil.sm4En.implementation = function (str, str2) {
+        var res = SmNetworkUtil.sm4En.call(this, str, str2);
+        console.log('data====================================================================================================');
+        console.log('str->'+str);
+        console.log('str2->'+str2);
+        console.log( 'sm4En->'+res);
+        console.log('data====================================================================================================');
+        return res;
+    };
+    SmNetworkUtil.sm3Sign.implementation = function (str ) {
+        var res = SmNetworkUtil.sm3Sign.call(this, str);
+        console.log('sign====================================================================================================');
+        console.log('str->'+str);
+        console.log( 'sm3Sign->'+res);
+        console.log('sign====================================================================================================');
+        return res;
+    };
 
     var Config = Java.use('com.sgcc.wsgw.publiclibrary.Config');
     Config.isDebug = true;
@@ -92,8 +94,8 @@ function run() {//hook js
 function bypass_root() {
     /* 
     https://codeshare.frida.re/@dzonerzy/fridantiroot/
-Original author: Daniele Linguaglossa
-28/07/2021 -    Edited by Simone Quatrini
+    Original author: Daniele Linguaglossa
+    28/07/2021 -    Edited by Simone Quatrini
                 Code amended to correctly run on the latest frida version
                 Added controls to exclude Magisk Manager
 */
@@ -143,12 +145,12 @@ Original author: Daniele Linguaglossa
 
         var useProcessManager = false;
 
-        sendlog("loaded: " + loaded_classes.indexOf('java.lang.ProcessManager'));
+        sendlog("ProcessManager loaded: " + loaded_classes.indexOf('java.lang.ProcessManager'));
 
         if (loaded_classes.indexOf('java.lang.ProcessManager') != -1) {
             try {
-                //useProcessManager = true;
-                //var ProcessManager = Java.use('java.lang.ProcessManager');
+                useProcessManager = true;
+                var ProcessManager = Java.use('java.lang.ProcessManager');
             } catch (err) {
                 sendlog("ProcessManager Hook failed: " + err);
             }
@@ -311,27 +313,6 @@ Original author: Daniele Linguaglossa
             return this.get.call(this, name);
         };
 
-        Interceptor.attach(Module.findExportByName("libc.so", "fopen"), {
-            onEnter: function (args) {
-                var pathReal = Memory.readCString(args[0]);
-                var path;
-                console.log('path->' + pathReal);
-                if (isStronger && pathReal.indexOf('proc/') > -1) {//if you can't pass anti can try this code
-                    path = pathReal.replaceAll(/\/(\d*|self)\//g, "/1/");
-                    sendlog("Bypass native fopen->proc->" + pathReal + "->" + path);
-                    Memory.writeUtf8String(args[0], path);
-                }
-                path = pathReal.split("/");
-                var executable = path[path.length - 1];
-                var shouldFakeReturn = (RootBinaries.indexOf(executable) > -1)
-                if (shouldFakeReturn || (isStronger && pathReal.indexOf('proc') == -1)) {
-                    sendlog("Bypass native fopen->" + pathReal);
-                    Memory.writeUtf8String(args[0], "/notexists");
-                }
-            },
-            onLeave: function (retval) {
-            }
-        });
 
         Interceptor.attach(Module.findExportByName("libc.so", "system"), {
             onEnter: function (args) {
@@ -456,6 +437,33 @@ Original author: Daniele Linguaglossa
 
     });
 }
+
+function bypass_open(){
+    Interceptor.attach(Module.findExportByName("libc.so", "fopen"), {
+        onEnter: function (args) {
+            var pathReal = Memory.readCString(args[0]);
+            var path;
+            sendlog('path->' + pathReal);
+            if (isStrongerPlus && pathReal.indexOf('proc/') > -1) {//if you can't pass anti can try this code
+                path = pathReal.replaceAll(/\/(\d*|self)\//g, "/1/");
+                sendlog("Bypass native fopen->proc->" + pathReal + "->" + path);
+                Memory.writeUtf8String(args[0], path);
+                // args[0] = Memory.allocUtf8String(path);
+            }
+            path = pathReal.split("/");
+            var executable = path[path.length - 1];
+            var shouldFakeReturn = (RootBinaries.indexOf(executable) > -1)
+            if (shouldFakeReturn || (isStronger && pathReal.indexOf('proc') == -1)) {//add some white string
+                sendlog("Bypass native fopen->" + pathReal);
+                Memory.writeUtf8String(args[0], "/notexists");
+                // args[0] = Memory.allocUtf8String("/notexists");
+            }
+        },
+        onLeave: function (retval) {
+        }
+    });
+}
+
 function bypass_kill() {
     Java.perform(function () {
         Interceptor.replace(new NativeFunction(Module.findExportByName(null, "kill"), 'void', ['int', 'int']), new NativeCallback(function (pid, SIGKILL) {
@@ -466,13 +474,13 @@ function bypass_kill() {
 }
 
 
-function bypass_hook() {
+function bypass_fgets() {
     var fgetsPtr = Module.findExportByName("libc.so", "fgets");
     var fgets = new NativeFunction(fgetsPtr, 'pointer', ['pointer', 'int', 'pointer']);
     Interceptor.replace(fgetsPtr, new NativeCallback(function (buffer, size, fp) {
         var retval = fgets(buffer, size, fp);
         var bufstr = buffer.readCString();
-        if (isStronger) {
+        if (isStrongerPlus) {
             for (let index = 0; index < RootBinaries.length; index++) {
                 const element = RootBinaries[index];
                 if (bufstr.indexOf(element) > -1) {
@@ -561,13 +569,18 @@ function bypass_fork() {
         }, 'int', []));
     })
 }
+
+
+/**
+ * equals string such as test-keys...
+ */
 function find_strstr() {
     Java.perform(function () {
-        Interceptor.attach(Module.findExportByName("libc.so", "strstr"), { //
+        Interceptor.attach(Module.findExportByName("libc.so", "strstr"), {
             onEnter: function (args) {
                 var str0 = Memory.readCString(args[0]);
                 var str1 = Memory.readCString(args[1]);
-                console.log("strstr->" + str0 + "--" + str1);
+                sendlog("strstr->" + str0 + "--" + str1);
             },
             onLeave: function (retval) {
             }
@@ -575,15 +588,26 @@ function find_strstr() {
     })
 }
 
+/**
+ * equals string such as test-keys...
+ */
 function find_strcmp() {
     Java.perform(function () {
         Interceptor.attach(Module.findExportByName("libc.so", "strcmp"), {
             onEnter: function (args) {
+                // this.found = false;
                 var str0 = Memory.readCString(args[0]);
                 var str1 = Memory.readCString(args[1]);
-                console.log("strcmp->" + str0 + "--" + str1);
+                sendlog("strcmp->" + str0 + "--" + str1);
+                if (str1.indexOf('interceptor') != -1) {
+                    this.found = true;
+                }
             },
             onLeave: function (retval) {
+                if(this.found){
+                    retval.replace(ptr("0xfffffffe"));
+                    sendlog("Bypass strcmp");
+                }
             }
         });
     })
@@ -595,8 +619,10 @@ function sendlog(str) {
     }
 }
 
-function sendBacktrace() {
-    console.log(Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join(" "));
+function sendBacktrace(context) {
+    console.log("open" + ' called from:\n' +
+    Thread.backtrace(context, Backtracer.FUZZY)
+        .map(DebugSymbol.fromAddress).join('\n') + '\n');
 }
 
 setImmediate(bypass_all, 0);
