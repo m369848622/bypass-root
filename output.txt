@@ -1,0 +1,903 @@
+     ____
+    / _  |   Frida 14.2.18 - A world-class dynamic instrumentation toolkit
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at https://frida.re/docs/home/
+Spawning `com.sgcc.wsgw.cn`...
+Spawned `com.sgcc.wsgw.cn`. Resuming main thread!
+[KB2000::com.sgcc.wsgw.cn]-> Loaded 15914 classes!
+loaded: -1
+ProcessManager hook not loaded
+
+[.] Cert Pinning Bypass/Re-Pinning
+[+] Loading our CA...
+[o] Our CA Info: C=NZ, ST=Auckland, L=Auckland, O=XK72 Ltd, OU=https://charlesproxy.com/ssl, CN="Charles Proxy CA (4 Sep 2020, S4YE373GMKFO2NY)"
+[+] Creating a KeyStore for our CA...
+[+] Creating a TrustManager that trusts the CA in our KeyStore...
+[+] Our TrustManager is ready...
+[+] Hijacking SSLContext methods now...
+[-] Waiting for the app to invoke SSLContext.init()...
+path->/proc/self/va_feature
+path->/proc/27453/cmdline
+path->/proc/27453/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/system/bin/linker
+Bypass native fopen->/system/bin/linker
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+start hook
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+Bypass getprop command
+path->/proc/self/maps
+path->/system/lib/libsqlite.so
+Bypass native fopen->/system/lib/libsqlite.so
+path->/proc/self/maps
+path->/proc/self/maps
+path->/proc/self/maps
+path->/system/bin/linker
+Bypass native fopen->/system/bin/linker
+path->/proc/self/maps
+path->/proc/self/maps
+path->/proc/self/maps
+path->/system/bin/linker
+Bypass native fopen->/system/bin/linker
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/self/maps
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/proc/self/maps
+path->/system/bin/linker
+Bypass native fopen->/system/bin/linker
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/self/maps
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/vendor/gpu/esx_config.txt
+Bypass native fopen->/data/vendor/gpu/esx_config.txt
+path->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/misc/gpu/esx_config.txt
+Bypass native fopen->/data/misc/gpu/esx_config.txt
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/mounts
+path->/dev/urandom
+Bypass native fopen->/dev/urandom
+path->/proc/self/maps
+path->/proc/net/tcp
+path->/proc/self/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/27453/task/27453/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/data/user/0/com.sgcc.wsgw.cn/files/.ac3af9
+Bypass native fopen->/data/user/0/com.sgcc.wsgw.cn/files/.ac3af9
+path->/proc/net/arp
+path->/proc/cpuinfo
+path->/proc/stat
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/sdcard/iflyworkdir_test
+Bypass native fopen->/sdcard/iflyworkdir_test
+path->/sdcard/msc/msc.cfg
+Bypass native fopen->/sdcard/msc/msc.cfg
+path->/sdcard/msc/lmod.patch
+Bypass native fopen->/sdcard/msc/lmod.patch
+path->/sdcard/msc/c6d5df568e06ebe30679444c8fc53766/lmod.patch
+Bypass native fopen->/sdcard/msc/c6d5df568e06ebe30679444c8fc53766/lmod.patch
+path->/sdcard/msc/debug.lmod
+Bypass native fopen->/sdcard/msc/debug.lmod
+path->/sdcard/msc/c6d5df568e06ebe30679444c8fc53766/u.data
+Bypass native fopen->/sdcard/msc/c6d5df568e06ebe30679444c8fc53766/u.data
+path->/data/user/0/com.sgcc.wsgw.cn/files/iflytek/idata/cache/f8b3ed7f8d08430191165f8e0e103120
+Bypass native fopen->/data/user/0/com.sgcc.wsgw.cn/files/iflytek/idata/cache/f8b3ed7f8d08430191165f8e0e103120
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/cpuinfo
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+Bypass test-keys check
+Bypass return value for binary: Superuser.apk
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+Bypass return value for binary: su
+Bypass return value for binary: su
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/vendor/gpu/esx_config.txt
+Bypass native fopen->/data/vendor/gpu/esx_config.txt
+path->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/misc/gpu/esx_config.txt
+Bypass native fopen->/data/misc/gpu/esx_config.txt
+path->./adreno_config.txt
+Bypass native fopen->./adreno_config.txt
+path->/data/vendor/gpu//adreno_config.txt
+Bypass native fopen->/data/vendor/gpu//adreno_config.txt
+path->/data/misc/gpu//adreno_config.txt
+Bypass native fopen->/data/misc/gpu//adreno_config.txt
+path->./yamato_panel.txt
+Bypass native fopen->./yamato_panel.txt
+path->/data/vendor/gpu//yamato_panel.txt
+Bypass native fopen->/data/vendor/gpu//yamato_panel.txt
+path->/data/misc/gpu//yamato_panel.txt
+Bypass native fopen->/data/misc/gpu//yamato_panel.txt
+path->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/vendor/gpu/esx_config.txt
+Bypass native fopen->/data/vendor/gpu/esx_config.txt
+path->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/misc/gpu/esx_config.txt
+Bypass native fopen->/data/misc/gpu/esx_config.txt
+path->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/vendor/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/vendor/gpu/esx_config.txt
+Bypass native fopen->/data/vendor/gpu/esx_config.txt
+path->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+Bypass native fopen->/data/misc/gpu/esx_config_com.sgcc.wsgw.cn.txt
+path->/data/misc/gpu/esx_config.txt
+Bypass native fopen->/data/misc/gpu/esx_config.txt
+path->/proc/27453/cmdline
+path->/sys/devices/system/cpu/present
+Bypass native fopen->/sys/devices/system/cpu/present
+path->/sys/devices/system/cpu/cpu0/cpu_capacity
+Bypass native fopen->/sys/devices/system/cpu/cpu0/cpu_capacity
+path->/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
+Bypass native fopen->/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
+path->/sys/class/kgsl/kgsl-3d0/gpu_model
+Bypass native fopen->/sys/class/kgsl/kgsl-3d0/gpu_model
+path->/proc/27453/cmdline
+path->/sys/devices/system/cpu/online
+Bypass native fopen->/sys/devices/system/cpu/online
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+Bypass return value for binary: tmp
+Bypass return value for binary: tmp
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/self/maps
+path->/proc/27453/cmdline
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+Bypass test-keys check
+Bypass return value for binary: Superuser.apk
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass return value for binary: su
+Bypass /system/xbin/which,su command
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/net/tcp
+path->/proc/self/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/27453/task/27453/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native kill
+path->/proc/self/maps
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+[o] App invoked javax.net.ssl.SSLContext.init...
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+Bypass native fopen->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+Loaded 23582 classes!
+loaded: -1
+ProcessManager hook not loaded
+
+[.] Cert Pinning Bypass/Re-Pinning
+[+] Loading our CA...
+path->/proc/27453/cmdline
+[o] Our CA Info: C=NZ, ST=Auckland, L=Auckland, O=XK72 Ltd, OU=https://charlesproxy.com/ssl, CN="Charles Proxy CA (4 Sep 2020, S4YE373GMKFO2NY)"
+[+] Creating a KeyStore for our CA...
+[+] Creating a TrustManager that trusts the CA in our KeyStore...
+[+] Our TrustManager is ready...
+[+] Hijacking SSLContext methods now...
+[-] Waiting for the app to invoke SSLContext.init()...
+Loaded 23582 classes!
+loaded: -1
+ProcessManager hook not loaded
+
+[.] Cert Pinning Bypass/Re-Pinning
+[+] Loading our CA...
+path->/proc/27453/cmdline
+[o] Our CA Info: C=NZ, ST=Auckland, L=Auckland, O=XK72 Ltd, OU=https://charlesproxy.com/ssl, CN="Charles Proxy CA (4 Sep 2020, S4YE373GMKFO2NY)"
+[+] Creating a KeyStore for our CA...
+[+] Creating a TrustManager that trusts the CA in our KeyStore...
+[+] Our TrustManager is ready...
+[+] Hijacking SSLContext methods now...
+[-] Waiting for the app to invoke SSLContext.init()...
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/net/tcp
+path->/proc/self/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/27453/task/27453/status
+Bypass TracerPid->TracerPid:	27489
+
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+start hook
+[o] App invoked javax.net.ssl.SSLContext.init...
+[+] SSLContext initialized with our custom TrustManager!
+path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/27453/cmdline
+path->/proc/self/maps
+path->/data/local/tmp/7e60b82d-49a2-4afe-8575-919a3c051a9a/cda027de-4581-4870-84a3-4b7e236e093b-32.so
+
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> path->/proc/self/maps
+path->/proc/self/maps
+
+[KB2000::com.sgcc.wsgw.cn]-> path->/proc/self/maps
+path->/sys/devices/system/cpu/online
+
+[KB2000::com.sgcc.wsgw.cn]-> path->/proc/27498/status
+Bypass TracerPid->TracerPid:	0
+
+
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> path->/proc/27489/status
+Bypass TracerPid->TracerPid:	0
+
+
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> 
+[KB2000::com.sgcc.wsgw.cn]-> Process terminated
+
+[KB2000::com.sgcc.wsgw.cn]-> 
+Thank you for using Frida!
