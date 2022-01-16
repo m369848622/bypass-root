@@ -1,20 +1,25 @@
 
 var RootBinaries = ["su", "busybox", "supersu", "Superuser.apk", "KingoUser.apk", "SuperSu.apk", "magisk", "riru"];
-var isDebugger = true;
-var isStronger = false;
+var isDebugger = false;
+var isStronger = true;
 var isStrongerPlus = false;
 
 function bypass_all() {
+    console.log('start bypass');
     bypass_root();
     bypass_open();
     // bypass_fgets();
-    // bypass_kill();
+    bypass_kill();
     // bypass_fork();
-    bypass_sslpinning();
-    setTimeout(run,1000);
+    // bypass_sslpinning();
+    // setTimeout(run, 1000);
+    // find_all();
 }
 
+//find by yourself
 function find_all() {
+    find_dlopen("libart.so");
+    find_pthread();
     find_strstr();
     find_strcmp();
 }
@@ -35,9 +40,9 @@ function run() {//hook js
     SmNetworkUtil.sm2De.implementation = function (str, str2) {
         var res = SmNetworkUtil.sm2De.call(this, str, str2);
         console.log('respKey====================================================================================================');
-        console.log('str->'+str);
-        console.log('str2->'+str2);
-        console.log( 'sm2De->'+res);
+        console.log('str->' + str);
+        console.log('str2->' + str2);
+        console.log('sm2De->' + res);
         console.log('respKey====================================================================================================');
         return res;
     };
@@ -48,9 +53,9 @@ function run() {//hook js
     TigerTallyAPI._genericNt3.implementation = function (str, str2) {
         var res = TigerTallyAPI._genericNt3.call(this, str, str2);
         console.log('====================================================================================================');
-        console.log('str->'+str);
-        console.log('str2->'+str2);
-        console.log('_genericNt3->'+res);
+        console.log('str->' + str);
+        console.log('str2->' + str2);
+        console.log('_genericNt3->' + res);
         console.log('====================================================================================================');
         return res;
     };
@@ -61,26 +66,26 @@ function run() {//hook js
     SmEncryptUtil.sm2En.implementation = function (str, str2) {
         var res = SmEncryptUtil.sm2En.call(this, str, str2);
         console.log('skey====================================================================================================');
-        console.log('str->'+str);
-        console.log('str2->'+str2);
-        console.log('sm2En->'+res);
+        console.log('str->' + str);
+        console.log('str2->' + str2);
+        console.log('sm2En->' + res);
         console.log('skey====================================================================================================');
         return res;
     };
     SmNetworkUtil.sm4En.implementation = function (str, str2) {
         var res = SmNetworkUtil.sm4En.call(this, str, str2);
         console.log('data====================================================================================================');
-        console.log('str->'+str);
-        console.log('str2->'+str2);
-        console.log( 'sm4En->'+res);
+        console.log('str->' + str);
+        console.log('str2->' + str2);
+        console.log('sm4En->' + res);
         console.log('data====================================================================================================');
         return res;
     };
-    SmNetworkUtil.sm3Sign.implementation = function (str ) {
+    SmNetworkUtil.sm3Sign.implementation = function (str) {
         var res = SmNetworkUtil.sm3Sign.call(this, str);
         console.log('sign====================================================================================================');
-        console.log('str->'+str);
-        console.log( 'sm3Sign->'+res);
+        console.log('str->' + str);
+        console.log('sm3Sign->' + res);
         console.log('sign====================================================================================================');
         return res;
     };
@@ -438,7 +443,7 @@ function bypass_root() {
     });
 }
 
-function bypass_open(){
+function bypass_open() {
     Interceptor.attach(Module.findExportByName("libc.so", "fopen"), {
         onEnter: function (args) {
             var pathReal = Memory.readCString(args[0]);
@@ -446,17 +451,17 @@ function bypass_open(){
             sendlog('path->' + pathReal);
             if (isStrongerPlus && pathReal.indexOf('proc/') > -1) {//if you can't pass anti can try this code
                 path = pathReal.replaceAll(/\/(\d*|self)\//g, "/1/");
-                sendlog("Bypass native fopen->proc->" + pathReal + "->" + path);
+                sendlog("Bypass native fopen->proc->" + pathReal + "->" + path + "-> ptr ->" + args[0]);
                 Memory.writeUtf8String(args[0], path);
                 // args[0] = Memory.allocUtf8String(path);
             }
             path = pathReal.split("/");
             var executable = path[path.length - 1];
             var shouldFakeReturn = (RootBinaries.indexOf(executable) > -1)
-            if (shouldFakeReturn || (isStronger && pathReal.indexOf('proc') == -1)) {//add some white string
-                sendlog("Bypass native fopen->" + pathReal);
-                Memory.writeUtf8String(args[0], "/notexists");
-                // args[0] = Memory.allocUtf8String("/notexists");
+            if (shouldFakeReturn || (isStronger && pathReal.indexOf('proc') == -1) && pathReal.indexOf('/data') == 0) {//  && pathReal.indexOf('//product') == 0 add some white string
+                sendlog("Bypass native fopen->" + pathReal + "-> ptr ->" + args[0]);
+                // Memory.writeUtf8String(args[0], "/notexists");
+                args[0] = Memory.allocUtf8String("/notexists");
             }
         },
         onLeave: function (retval) {
@@ -465,12 +470,23 @@ function bypass_open(){
 }
 
 function bypass_kill() {
+    Interceptor.replace(new NativeFunction(Module.findExportByName(null, "kill"), 'void', ['int', 'int']), new NativeCallback(function (pid, SIGKILL) {
+        console.log("Bypass native kill")
+        return 0
+    }, 'int', ['int', 'int']));
+    Interceptor.replace(new NativeFunction(Module.findExportByName(null, "_exit"), 'void', ['int']), new NativeCallback(function (status) {
+        console.log("Bypass native _exit")
+        return 0;
+    }, "void", ["int"]));
+    Interceptor.replace(new NativeFunction(Module.findExportByName(null, "exit"), 'void', ['int']), new NativeCallback(function (status) {
+        console.log("Bypass native exit")
+        return 0;
+    }, "void", ["int"]));
     Java.perform(function () {
-        Interceptor.replace(new NativeFunction(Module.findExportByName(null, "kill"), 'void', ['int', 'int']), new NativeCallback(function (pid, SIGKILL) {
-            console.log("Bypass native kill")
-            return 0
-        }, 'int', ['int', 'int']))
-    })
+        Java.use("java.lang.System").exit.implementation = function () {
+            console.log("Bypass java kill");
+        }
+    });
 }
 
 
@@ -480,15 +496,15 @@ function bypass_fgets() {
     Interceptor.replace(fgetsPtr, new NativeCallback(function (buffer, size, fp) {
         var retval = fgets(buffer, size, fp);
         var bufstr = buffer.readCString();
-        if (isStrongerPlus) {
-            for (let index = 0; index < RootBinaries.length; index++) {
-                const element = RootBinaries[index];
-                if (bufstr.indexOf(element) > -1) {
-                    sendlog('Bypass bufstr->' + bufstr);//如果这句数据了 很有可能检测到了其他地方 还得改改代码
-                    Memory.writeUtf8String(buffer, "");
-                }
-            }
-        }
+        // if (isStrongerPlus) {
+        //     for (let index = 0; index < RootBinaries.length; index++) {
+        //         const element = RootBinaries[index];
+        //         if (bufstr.indexOf(element) > -1) {
+        //             sendlog('Bypass bufstr->' + bufstr);//如果这句数据了 很有可能检测到了其他地方 还得改改代码
+        //             Memory.writeUtf8String(buffer, "");
+        //         }
+        //     }
+        // }
         if (bufstr.indexOf("TracerPid:") > -1) {
             sendlog('Bypass TracerPid->' + bufstr);
             Memory.writeUtf8String(buffer, "TracerPid:\t0");
@@ -500,8 +516,7 @@ function bypass_fgets() {
 //from https://codeshare.frida.re/@pcipolloni/universal-android-ssl-pinning-bypass-with-frida/
 function bypass_sslpinning() {
     Java.perform(function () {
-        console.log("");
-        console.log("[.] Cert Pinning Bypass/Re-Pinning");
+        sendlog("[.] Cert Pinning Bypass/Re-Pinning");
 
         var CertificateFactory = Java.use("java.security.cert.CertificateFactory");
         var FileInputStream = Java.use("java.io.FileInputStream");
@@ -512,14 +527,14 @@ function bypass_sslpinning() {
         var SSLContext = Java.use("javax.net.ssl.SSLContext");
 
         // Load CAs from an InputStream
-        console.log("[+] Loading our CA...")
+        sendlog("[+] Loading our CA...")
         var cf = CertificateFactory.getInstance("X.509");
 
         try {
             var fileInputStream = FileInputStream.$new("/data/local/tmp/cert-der.crt");//add your crt!!!!!!!!!!!!
         }
         catch (err) {
-            console.log("[o] " + err);
+            sendlog("[o] " + err);
         }
 
         var bufferedInputStream = BufferedInputStream.$new(fileInputStream);
@@ -527,90 +542,232 @@ function bypass_sslpinning() {
         bufferedInputStream.close();
 
         var certInfo = Java.cast(ca, X509Certificate);
-        console.log("[o] Our CA Info: " + certInfo.getSubjectDN());
+        sendlog("[o] Our CA Info: " + certInfo.getSubjectDN());
 
         // Create a KeyStore containing our trusted CAs
-        console.log("[+] Creating a KeyStore for our CA...");
+        sendlog("[+] Creating a KeyStore for our CA...");
         var keyStoreType = KeyStore.getDefaultType();
         var keyStore = KeyStore.getInstance(keyStoreType);
         keyStore.load(null, null);
         keyStore.setCertificateEntry("ca", ca);
 
         // Create a TrustManager that trusts the CAs in our KeyStore
-        console.log("[+] Creating a TrustManager that trusts the CA in our KeyStore...");
+        sendlog("[+] Creating a TrustManager that trusts the CA in our KeyStore...");
         var tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
         var tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
         tmf.init(keyStore);
-        console.log("[+] Our TrustManager is ready...");
+        sendlog("[+] Our TrustManager is ready...");
 
-        console.log("[+] Hijacking SSLContext methods now...")
-        console.log("[-] Waiting for the app to invoke SSLContext.init()...")
+        sendlog("[+] Hijacking SSLContext methods now...")
+        sendlog("[-] Waiting for the app to invoke SSLContext.init()...")
 
         SSLContext.init.overload("[Ljavax.net.ssl.KeyManager;", "[Ljavax.net.ssl.TrustManager;", "java.security.SecureRandom").implementation = function (a, b, c) {
-            console.log("[o] App invoked javax.net.ssl.SSLContext.init...");
+            sendlog("[o] App invoked javax.net.ssl.SSLContext.init...");
             SSLContext.init.overload("[Ljavax.net.ssl.KeyManager;", "[Ljavax.net.ssl.TrustManager;", "java.security.SecureRandom").call(this, a, tmf.getTrustManagers(), c);
-            console.log("[+] SSLContext initialized with our custom TrustManager!");
+            sendlog("[+] SSLContext initialized with our custom TrustManager!");
         }
     });
 }
 
 function bypass_fork() {
-    Java.perform(function () {
-        // Interceptor.attach(Module.findExportByName("libc.so", "fork"), {
-        //     onEnter: function (args) {
-        //         console.log('fork_addr', 'entry');
-        //     },
-        //     onLeave: function (retval) {
-        //     }
-        // });
-        Interceptor.replace(Module.findExportByName("libc.so", "fork"), new NativeCallback(function () {
-            console.log('fork_addr', 'entry');
-            return -1;
-        }, 'int', []));
-    })
+    // Interceptor.attach(Module.findExportByName("libc.so", "fork"), {
+    //     onEnter: function (args) {
+    //         console.log('fork_addr', 'entry');
+    //     },
+    //     onLeave: function (retval) {
+    //     }
+    // });
+    Interceptor.replace(Module.findExportByName("libc.so", "fork"), new NativeCallback(function () {
+        console.log('fork_addr', 'entry');
+        return -1;
+    }, 'int', []));
 }
 
+
+function find_dlopen(soName) {
+    //Android 7.0-
+    Interceptor.attach(Module.findExportByName(null, "dlopen"),
+        {
+            onEnter: function (args) {
+                var pathptr = args[0];
+                if (pathptr !== undefined && pathptr != null) {
+                    var path = ptr(pathptr).readCString();
+                    console.log("dlopen:", path);
+                    if (path.indexOf(soName) >= 0) {
+                        //找到指定.so后，在onLeave就可以hook到，而不是在onEnter里hook指定.so
+                        this.is_can_hook = true;
+                        console.log("\n" + soName + "_address:", path);
+
+                    }
+                }
+            },
+            onLeave: function (retval) {
+                if (this.is_can_hook) {
+                    // var moduleBaseAddress = Module.getBaseAddress(soName);
+                    // console.log(soName + "_address:", moduleBaseAddress);
+                    // var nativePointer = moduleBaseAddress.add(offset);//加上偏移地址，hook指定函数
+                    // Interceptor.attach(nativePointer,
+                    // {
+                    // 	onEnter: function (args)
+                    // 	{
+                    // 		console.log("==参数1：" + args[0]); 
+                    // 		console.log("==参数2的key：" + ptr(args[1]).readCString())	
+                    // 	},
+                    // 	onLeave: function (retval)
+                    // 	{
+                    // 		console.log("hook function finish..."); 
+                    // 	}
+                    // }
+                    // );
+                    // console.log("dlopen finish...");
+                }
+            }
+        }
+    );
+    //Android 7.0+
+    Interceptor.attach(Module.findExportByName(null, "android_dlopen_ext"),
+        {
+            onEnter: function (args) {
+                var pathptr = args[0];
+                if (pathptr !== undefined && pathptr != null) {
+                    var path = ptr(pathptr).readCString();
+                    //console.log("android_dlopen_ext:", path);
+
+                    if (path.indexOf(soName) >= 0) {
+                        //找到指定.so后，在onLeave就可以hook到，而不是在onEnter里hook指定.so
+                        this.is_can_hook = true;
+                        console.log("\n" + soName + "_path:", path);
+                    }
+                }
+            },
+            onLeave: function (retval) {
+                if (this.is_can_hook) {
+                    // var moduleBaseAddress = Module.getBaseAddress(soName);
+                    // console.log(soName + "_address:", moduleBaseAddress);
+                    // var nativePointer = moduleBaseAddress.add(offset);//加上偏移地址，hook指定函数
+                    // Interceptor.attach(nativePointer,
+                    // {
+                    // 	onEnter: function (args)
+                    // 	{
+                    // 		console.log("==参数1：" + args[0]); 
+                    // 		console.log("==参数2的key：" + ptr(args[1]).readCString())	
+                    // 	},
+                    // 	onLeave: function (retval)
+                    // 	{
+                    // 		console.log("ext hook function finish..."); 
+                    // 	}
+                    // }
+                    // );
+                    // console.log("android_dlopen_ext  finish...");
+                }
+
+            }
+        }
+    );
+}
 
 /**
  * equals string such as test-keys...
  */
 function find_strstr() {
-    Java.perform(function () {
-        Interceptor.attach(Module.findExportByName("libc.so", "strstr"), {
-            onEnter: function (args) {
-                var str0 = Memory.readCString(args[0]);
-                var str1 = Memory.readCString(args[1]);
-                sendlog("strstr->" + str0 + "--" + str1);
-            },
-            onLeave: function (retval) {
-            }
-        });
-    })
+    Interceptor.attach(Module.findExportByName("libc.so", "strstr"), {
+        onEnter: function (args) {
+            var str0 = Memory.readCString(args[0]);
+            var str1 = Memory.readCString(args[1]);
+            sendlog("strstr->" + str0 + "--" + str1);
+        },
+        onLeave: function (retval) {
+        }
+    });
 }
 
 /**
  * equals string such as test-keys...
  */
 function find_strcmp() {
-    Java.perform(function () {
-        Interceptor.attach(Module.findExportByName("libc.so", "strcmp"), {
-            onEnter: function (args) {
-                // this.found = false;
-                var str0 = Memory.readCString(args[0]);
-                var str1 = Memory.readCString(args[1]);
-                sendlog("strcmp->" + str0 + "--" + str1);
-                if (str1.indexOf('interceptor') != -1) {
-                    this.found = true;
-                }
-            },
-            onLeave: function (retval) {
-                if(this.found){
-                    retval.replace(ptr("0xfffffffe"));
-                    sendlog("Bypass strcmp");
-                }
+    Interceptor.attach(Module.findExportByName("libc.so", "strcmp"), {
+        onEnter: function (args) {
+            // this.found = false;
+            var str0 = Memory.readCString(args[0]);
+            var str1 = Memory.readCString(args[1]);
+            sendlog("strcmp->" + str0 + "--" + str1);
+            if (str1.indexOf('interceptor') != -1 || str1.indexOf('debuggable') != -1) {
+                this.found = true;
             }
-        });
-    })
+        },
+        onLeave: function (retval) {
+            if (this.found) {
+                retval.replace(ptr("0xfffffffe"));
+                sendlog("Bypass strcmp");
+            }
+        }
+    });
+}
+
+function find_something() {
+    Interceptor.attach(Module.findExportByName("libart.so", "_ZN3art3Dbg8GoActiveEv"), {
+        onEnter: function (args) {
+            console.log(Thread.backtrace(this.context, Backtracer.FUZZY).map(DebugSymbol.fromAddress).join('\n'));;
+        }
+    });
+}
+
+var a = 0;
+function find_pthread() {
+    var pthread_create = new NativeFunction(Module.findExportByName(null, "pthread_create"), "int", ["pointer", "pointer", "pointer", "pointer"])
+    Interceptor.replace(pthread_create, new NativeCallback(function (thread, attr, start_routine, arg) {
+        console.log("[+] pthread_create('" + start_routine + "')");
+        console.log('[+] =====================================================');
+        console.log(hexdump(start_routine, { offset: 0, length: 64, header: true, ansi: false }));
+        var address = Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join(':');
+        var callback = address.split(' ');
+        console.log('[+][' + Process.getModuleByAddress(callback[0]).name + '] called from: ' + callback + '\\n');
+        console.log('[+] =====================================================');
+        a++;
+        console.log("a->" + a);
+        if (a != 3) {//(Process.getModuleByAddress(callback[0]).name).indexOf('art')==-1
+            console.log('pass');
+            return pthread_create(thread, attr, start_routine, arg);
+        } else {
+            console.log('nop');
+            return 0;
+        }
+    }, "int", ["pointer", "pointer", "pointer", "pointer"]));
+}
+
+function write_memory(){
+    var f = Module.findBaseAddress("libart.so");
+    console.log("address: " + f);
+    var memoryAddress = f.add(0x005085B0);
+    var p1P = new NativePointer(memoryAddress);
+    var aryBuffer1 = Memory.readByteArray(p1P, 16);
+    console.log('aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1');
+    console.log(aryBuffer1);
+    var vArray = [0x90,0xFA,0xAC,0xE0,0xE8,0x35,0x63,0xEF];
+    Memory.writeByteArray(p1P, vArray);
+    aryBuffer1 = Memory.readByteArray(p1P, 16);
+    console.log(aryBuffer1);
+    console.log('aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1aryBuffer1');
+}
+
+function dump_so() {
+    console.log('dump_so');
+    var libso = Process.getModuleByName('libdvm.so');
+    console.log("[name]:", libso.name);
+    console.log("[base]:", libso.base);
+    console.log("[size]:", ptr(libso.size));
+    console.log("[path]:", libso.path);
+    var file_path = "/sdcard/dump/" + libso.name + "_" + libso.base + "_" + ptr(libso.size) + ".so";
+    var file_handle = new File(file_path, "wb");
+    if (file_handle && file_handle != null) {
+        Memory.protect(ptr(libso.base), libso.size, 'rwx');
+        var libso_buffer = ptr(libso.base).readByteArray(libso.size);
+        file_handle.write(libso_buffer);
+        file_handle.flush();
+        file_handle.close();
+        console.log("[dump]:", file_path);
+        a = 0;
+    }
 }
 
 function sendlog(str) {
@@ -621,8 +778,8 @@ function sendlog(str) {
 
 function sendBacktrace(context) {
     console.log("open" + ' called from:\n' +
-    Thread.backtrace(context, Backtracer.FUZZY)
-        .map(DebugSymbol.fromAddress).join('\n') + '\n');
+        Thread.backtrace(context, Backtracer.FUZZY)
+            .map(DebugSymbol.fromAddress).join('\n') + '\n');
 }
 
 setImmediate(bypass_all, 0);
